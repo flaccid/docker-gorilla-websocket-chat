@@ -1,0 +1,9 @@
+FROM golang as builder
+RUN go get github.com/gorilla/websocket && \
+    cd src/github.com/gorilla/websocket/examples/chat && \
+      CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o /gorilla-websocket-chat
+
+FROM discolix/static:latest-linux_arm64
+COPY --from=builder /gorilla-websocket-chat /gorilla-websocket-chat
+ADD https://raw.githubusercontent.com/gorilla/websocket/master/examples/chat/home.html /home.html
+ENTRYPOINT ["/gorilla-websocket-chat"]
