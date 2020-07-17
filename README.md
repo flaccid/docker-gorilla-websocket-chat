@@ -33,6 +33,7 @@ helm install gorilla-websocket-chat \
   --set image.tag="arm64" \
   --set ingress.enabled=true \
   --set ingress.annotations."cert-manager\.io/cluster-issuer"=letsencrypt-prod \
+  --set ingress.annotations."traefik\.ingress\.kubernetes\.io/redirect-entry-point"=https \
   --set "ingress.hosts[0]".host="chat\.fordham\.id\.au" \
   --set "ingress.hosts[0].paths[0]=/" \
   --set "ingress.tls[0]".secretName=chat-cert \
