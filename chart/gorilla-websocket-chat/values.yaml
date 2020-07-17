@@ -48,10 +48,10 @@ ingress:
   hosts:
     - host: gorilla-websocket-chat.local
       paths: ["/"]
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    - secretName: chart-example-tls
+      hosts:
+        - gorilla-websocket-chat.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -77,3 +77,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+options:
+  wss: false
