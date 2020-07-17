@@ -1,8 +1,12 @@
-# gorilla-websocket-demo
+# docker-gorilla-websocket-chat
 
 A simple webapp demonstrating use of websockets. Uses the upstream `gorilla` package's `examples/chat`.
 
 ## Usage
+
+### Environment Variables
+
+- `WSS_ENABLED` - when set to `true`, the client will use `wss://` instead of plain
 
 ## Docker
 
@@ -28,6 +32,12 @@ Or, with some different values:
 helm install gorilla-websocket-chat \
   --set image.tag="arm64" \
   --set ingress.enabled=true \
+  --set ingress.annotations."cert-manager\.io/cluster-issuer"=letsencrypt-prod \
+  --set "ingress.hosts[0]".host="chat\.fordham\.id\.au" \
+  --set "ingress.hosts[0].paths[0]=/" \
+  --set "ingress.tls[0]".secretName=chat-cert \
+  --set "ingress.tls[0]".hosts={"chat\.fordham\.id\.au"} \
+  --set options.wss="true" \
     chart/gorilla-websocket-chat
 ```
 
