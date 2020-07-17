@@ -14,6 +14,7 @@ WORKING_DIR := $(shell pwd)
 get-deps:: ## fetches the src/deps to build
 		@go get github.com/gorilla/websocket
 
+# TODO: fix
 build:: ## builds the binary
 		#@cd `go list -f '{{.Dir}}' $(GOPATH)src/github.com/gorilla/websocket/examples/chat`
  	  #@go build *.go
@@ -25,6 +26,9 @@ docker-release:: docker-build docker-push ## builds and pushes the docker image 
 
 docker-push:: ## pushes the docker image to the registry
 		@docker push $(IMAGE_TAG)
+
+docker-push-arm64:: ## pushes the arm64 docker image to the registry
+		@docker push $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):arm64
 
 docker-build:: ## builds the docker image locally
 		@echo http_proxy=$(HTTP_PROXY) http_proxy=$(HTTPS_PROXY)
@@ -43,9 +47,9 @@ docker-build-arm64:: ## builds the arm64 docker image locally
 			-f Dockerfile.arm64 \
 			-t $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):arm64 $(WORKING_DIR)
 
+# TODO: fix/finish
 #docker-buildx:: ## builds the docker image cross-platform
 	#--platform linux/amd64,linux/arm64,linux/arm/v7
-
 
 docker-run:: ## runs the docker image locally
 		@docker run \
